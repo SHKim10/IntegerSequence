@@ -20,4 +20,12 @@ public class ArraySequence implements IntegerSequence{
     }
     otherseq.reset();
   }
+
+  public void reset(){
+    currentIndex = 0;
+  }
+
+  public int length(){
+    return data.length;
+  }
 }
