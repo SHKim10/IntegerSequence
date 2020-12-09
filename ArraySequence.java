@@ -1,24 +1,21 @@
-import java.util.*;
+import java.util.NoSuchElementException;
 public class ArraySequence implements IntegerSequence{
   int currentIndex;
   int[] data;
+
   public ArraySequence(int[] other){
-    data = new int[other.length];
-    for (int i = 0; i < other.length; i++){
-      data[i] = other[i];
-    }
+    data = other;
     currentIndex = 0;
   }
 
   public ArraySequence(IntegerSequence otherseq){
-    otherseq.reset();
     data = new int[otherseq.length()];
-    int i = 0;
-    while (otherseq.hasNext()){
+    otherseq.reset();
+    for (int i = 0; i < data.length; i++){
       data[i] = otherseq.next();
-      i++;
     }
     otherseq.reset();
+    currentIndex = 0;
   }
 
   public void reset(){
@@ -29,15 +26,12 @@ public class ArraySequence implements IntegerSequence{
     return data.length;
   }
 
-  public boolean hasnext(){
-    if (currentIndex == data.length) return false;
-    return true;
+  public boolean hasNext(){
+    return currentIndex < data.length;
   }
 
   public int next(){
-    if (hasNext() == false){
-      throw new NoSuchElementException;
-    }
+    if (!hasNext()) throw new NoSuchElementException();
     return data[currentIndex++];
   }
 }
